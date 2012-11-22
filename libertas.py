@@ -71,7 +71,6 @@ if args.sub_name == "tweet":
 elif args.sub_name == "ed":
     print "Libertas tweetbot initialized..."
     api = new_auth(acc_key, acc_sec, CONSUMER_KEY, CONSUMER_SECRET)
-    api.update_status("Libertas tweetbot initialized... http://godsofliberty.github.com/libertas/")
     if args.file:
         quote_list = str(args.file)
     else:
