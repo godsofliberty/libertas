@@ -15,6 +15,7 @@ acc_sec = "data/acc_sec.txt"
 CONSUMER_KEY = 
 CONSUMER_SECRET = 
 ff_exit_file="data/ff_exits.txt"
+ed_intro_file="data/ed_intros.txt"
 ed_exit_file="data/ed_exits.txt"
      
 parser = argparse.ArgumentParser(prog="libertas", formatter_class=RawTextHelpFormatter, description="""Libertas is a set of cli tools for twitter with activism in mind. It includes a cli tweet, #FF bot and more.
@@ -45,8 +46,10 @@ tweet_parser.add_argument("string", action="store", help="The tweet to send to t
 
 # The ed command.
 ed_parser = subparsers.add_parser("ed", help="A libertarian quote tweeter bot.")
+ed_parser.add_argument("-i", "--intro", help="The ed bot intro selection file")
 ed_parser.add_argument("file", action="store", help="File of quotes to send. Default=data/quotes.txt")
 ed_parser.add_argument("-s", "--seconds", action="store", dest="secs", help="Wait between tweets: 30-3600. Default=300", type=int)
+ed_parser.add_argument("-e", "--exit", help="The ed bot exit selection file."
 
 # The List_check command
 list_check_parser =subparsers.add_parser("list_check", help="Checks a list for character counts and reports a line over 140 characters.")
@@ -73,10 +76,20 @@ if args.sub_name == "tweet":
 elif args.sub_name == "ed":
     print "Libertas tweetbot initialized..."
     api = new_auth(acc_key, acc_sec, CONSUMER_KEY, CONSUMER_SECRET)
+    if args.intro:
+        ed_intro_file = args.intro
+        ed_intro = random_intro(ed_intro_file)
+    else:
+        ed_intro = random_intro(ed_intro_file)    
     if args.file:
         quote_list = str(args.file)
     else:
         print "No such file"
+    if args.exit:
+        ed_exit_file = args.exit
+        exit_selection = random_intro(ed_exit_file)
+    else:
+        exit_selection = random_intro(ed_exit_file)
     if args.secs == None:
         wait = 300
     else:
@@ -92,7 +105,6 @@ elif args.sub_name == "ed":
         else:
             print "Seconds out of range"
     print "Libertas tweetbot unloaded."
-    exit_selection= random_intro(ed_exit_file)
     api.update_status(exit_selection)
     exit()
 
