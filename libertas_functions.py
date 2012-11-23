@@ -24,7 +24,6 @@ def is_number(x):
 def list_menu(lists):
     count = len(lists)
     num = 0
-    
     for item in lists:
         tac = str(num)
         num = num + 1
@@ -106,7 +105,6 @@ def retweeter(keyword, acc_key, acc_sec, CONSUMER_KEY, CONSUMER_SECRET, username
         # if we've never retweeted before, then we're going to
         # retweet all msgs created after the 20th century, ie. all of them
         created_after = datetime.datetime(year=2000, month=1, day=1)
-
     # grab all tweets that include our keyword 
     tweets = api.search(keyword)
     # reverse them to get the oldest first
@@ -133,7 +131,6 @@ def random_intro(i_file):
     
 def list_choice(local_list, choice):
     # Get the user's choice, checks to make sure it is acceptable and set it as the list to #FF
-    
     last = len(local_list)
     if check_num(choice):
         pick = int(choice)
@@ -155,7 +152,7 @@ def get_lists(api):
     return local_list
     
         
-#Get the seconds and test the range.
+# Get the seconds and test the range.
 def test_secs(wait):
     if check_num(wait) == True:
         if int(wait) in range(30, 3601):
@@ -167,18 +164,16 @@ def test_secs(wait):
 # Slices up the list to tweet, formats the tweets, and sends them.
 def execute(api, fflist, p_name, libertas_intro, exit_tweet, secs, username):
 # Get list members from the selected twitter list and add the @
-    
     tweet_list =[]
     the_list = tweepy.Cursor(api.list_members, username, fflist).items()
     for user in the_list:
         tweeter = '@'+user.screen_name
         tweet_list.append(tweeter)
-
 # Extract 6 users at a time from the list. Tweets only 6 names ata time to avoid going over 140
     tweet_start = 0
     tweet_stop =6
     tweet = "ok"
-    # Libertas Intro calls random_intro and sends the intro to twitter
+# Libertas Intro calls random_intro and sends the intro to twitter
     api.update_status(libertas_intro)
     time.sleep(10)
 # Format the tweet making sure the bot stops when it runs out of members.

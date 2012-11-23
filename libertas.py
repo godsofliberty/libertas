@@ -14,7 +14,8 @@ acc_key = "data/acc_key.txt"
 acc_sec = "data/acc_sec.txt"
 CONSUMER_KEY = 
 CONSUMER_SECRET = 
-exit_file="data/exits.txt"
+ff_exit_file="data/ff_exits.txt"
+ed_exit_file="data/ed_exits.txt"
      
 parser = argparse.ArgumentParser(prog="libertas", formatter_class=RawTextHelpFormatter, description="""Libertas is a set of cli tools for twitter with activism in mind. It includes a cli tweet, #FF bot and more.
 
@@ -91,7 +92,8 @@ elif args.sub_name == "ed":
         else:
             print "Seconds out of range"
     print "Libertas tweetbot unloaded."
-    api.update_status("Libertas tweetbot unloaded.")
+    exit_selection= random_intro(ed_exit_file)
+    api.update_status(exit_selection)
     exit()
 
 # The list_check command code
@@ -109,7 +111,6 @@ elif args.sub_name == "ffbot":
     api = new_auth(acc_key, acc_sec, CONSUMER_KEY, CONSUMER_SECRET)
     username = api.me().screen_name
     if args.tlist==None and args.secs==None and args.file==None:
-        
         logo(p_name)
         print "Welcome to the ffbot Interactive Menu"
         print "====================================="
@@ -129,15 +130,13 @@ elif args.sub_name == "ffbot":
             print wait
             user_file = str(raw_input("Enter full path to file to be scanned for an intro: "))
             intro_file = random_intro(user_file)
-            exit_tweet = random_intro(exit_file)
+            exit_tweet = random_intro(ff_exit_file)
             print p_name + " is working..."
             execute(api, choice, p_name, intro_file, exit_tweet, wait, username)
-        
             print p_name + "is finished."
         else:
             exit()
         exit()
- 
     elif args.tlist == None and args.secs == None:
         args.tlist = 0
         args.secs = 300
@@ -153,26 +152,23 @@ elif args.sub_name == "ffbot":
         args.secs = 300
     elif args.file == None:
         args.file = "data/intros.txt"
- 
-#Get the list to follow from twitter choose one.
+ #Get the list to follow from twitter choose one.
 twitter_lists = get_lists(api)
 print twitter_lists
 choice = list_choice(twitter_lists, args.tlist)
- 
-# Set the seconds between tweets.
+ # Set the seconds between tweets.
 wait = args.secs
 results = test_secs(wait)
 if results == True:
     pass
 else:
     print "seconds must be between 30 and 3600"
- 
 # Get the intro from the file
 intro = random_intro(args.file)
-
+exit_tweet = random_intro(exit_file)
 print intro
 # Set it in motion
-execute(api, choice, p_name, intro, wait, username)
+execute(api, choice, p_name, intro, exit_tweet, wait, username)
 
 
 
