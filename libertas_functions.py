@@ -120,14 +120,14 @@ def random_intro(i_file):
     # Load the intros from file and put them into a list.
     intro_list =[]
     intro_file = open(i_file)
-    for intro in intro_file:
-        intro_list.append(intro)
+    for selection in intro_file:
+        intro_list.append(selection)
     intro_file.close()
     # Randomize the intro_list.
     list_length = (len(intro_list)) - 1
     random_intro = random.randint(0, list_length)
-    intro = intro_list[random_intro]
-    return intro
+    selection = intro_list[random_intro]
+    return selection
 
 
     
@@ -165,7 +165,7 @@ def test_secs(wait):
             return False
 
 # Slices up the list to tweet, formats the tweets, and sends them.
-def execute(api, fflist, p_name, libertas_intro, secs, username):
+def execute(api, fflist, p_name, libertas_intro, exit_tweet, secs, username):
 # Get list members from the selected twitter list and add the @
     
     tweet_list =[]
@@ -179,15 +179,6 @@ def execute(api, fflist, p_name, libertas_intro, secs, username):
     tweet_stop =6
     tweet = "ok"
     # Libertas Intro calls random_intro and sends the intro to twitter
-    
-
-    
-
-
-
-
-
-
     api.update_status(libertas_intro)
     time.sleep(10)
 # Format the tweet making sure the bot stops when it runs out of members.
@@ -205,7 +196,7 @@ def execute(api, fflist, p_name, libertas_intro, secs, username):
                 api.update_status(msg)
                 time.sleep(secs)
     logo(p_name)
-    api.update_status("Libertas 2.0 finished.")
+    api.update_status(exit_tweet)
 
 # list_check Function
 def list_check(arg, p_name):

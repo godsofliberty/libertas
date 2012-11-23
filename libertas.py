@@ -14,6 +14,7 @@ acc_key = "data/acc_key.txt"
 acc_sec = "data/acc_sec.txt"
 CONSUMER_KEY = 
 CONSUMER_SECRET = 
+exit_file="data/exits.txt"
      
 parser = argparse.ArgumentParser(prog="libertas", formatter_class=RawTextHelpFormatter, description="""Libertas is a set of cli tools for twitter with activism in mind. It includes a cli tweet, #FF bot and more.
 
@@ -128,8 +129,9 @@ elif args.sub_name == "ffbot":
             print wait
             user_file = str(raw_input("Enter full path to file to be scanned for an intro: "))
             intro_file = random_intro(user_file)
+            exit_tweet = random_intro(exit_file)
             print p_name + " is working..."
-            execute(api, choice, p_name, intro_file, wait, username)
+            execute(api, choice, p_name, intro_file, exit_tweet, wait, username)
         
             print p_name + "is finished."
         else:
@@ -167,6 +169,7 @@ else:
  
 # Get the intro from the file
 intro = random_intro(args.file)
+
 print intro
 # Set it in motion
 execute(api, choice, p_name, intro, wait, username)
