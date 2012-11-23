@@ -1,5 +1,5 @@
 ##A project by GodsofLiberty
-###Follow me on twitter: https://twitter.com/godofliberty
+###Follow me on twitter: https://twitter.com/godsofliberty
 ###The project page is located at http://godsofliberty.github.com/libertas/
 
 libertas.py is a python program written with python 2.7
