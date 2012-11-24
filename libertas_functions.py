@@ -41,9 +41,9 @@ def check_num(uinput):
         return False
 
 # Get twitter PIN for Authorization
-def get_pin(acc_key, acc_sec, CONSUMER_KEY, CONSUMER_SECRET):
+def get_pin(acc_key, acc_sec, con_keys, con_secret):
     # Get the pin
-    auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
+    auth = tweepy.OAuthHandler(con_keys, con_secret)
     auth_url = auth.get_authorization_url()
     webbrowser.open(auth_url)
     pin = raw_input("Enter the PIN: ")
@@ -60,7 +60,7 @@ def get_pin(acc_key, acc_sec, CONSUMER_KEY, CONSUMER_SECRET):
     return tweepy.API(auth)
 
 # Authorize from a file
-def authorize(acc_key, acc_sec, CONSUMER_KEY, CONSUMER_SECRET):
+def authorize(acc_key, acc_sec, con_keys, con_secret):
     key_file = open(acc_key)
     for key in key_file:
         ACCESS_KEY = key
@@ -69,10 +69,18 @@ def authorize(acc_key, acc_sec, CONSUMER_KEY, CONSUMER_SECRET):
     for sec in sec_file:
         ACCESS_SECRET = sec
     sec_file.close()
+    con_key = open(con_keys)
+    for c_key in con_key:
+        CONSUMER_KEY = c_key.strip()
+    con_key.close()
+    con_sec = open(con_secret)
+    for c_sec in con_sec:
+        CONSUMER_SECRET = c_sec.strip()
+    con_sec.close()
     auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
     auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
     return tweepy.API(auth)
-
+    print [CONSUMER_SECRET, CONSUMER_KEY]
 # Display the program name
 def logo(p_name):
     os.system("clear")
@@ -82,37 +90,19 @@ def logo(p_name):
 
 #Check if authorization is new or already in a file
 #ASSIGN TO api CALL THIS FUNCTION TO AUTHORIZE
-def new_auth(acc_key, acc_sec, CONSUMER_KEY, CONSUMER_SECRET):
+def new_auth(acc_key, acc_sec, con_keys, con_secret):
     # Check to see if AccessKeys exist already, if not get PIN from twitter
     if os.path.exists(acc_key):
         if os.path.exists(acc_sec):
-            api = authorize(acc_key, acc_sec, CONSUMER_KEY, CONSUMER_SECRET)
+            api = authorize(acc_key, acc_sec, con_keys, con_secret)
             return api
         else:
-            api = get_pin(acc_key, acc_sec, CONSUMER_KEY, CONSUMER_SECRET)
+            api = get_pin(acc_key, acc_sec, con_keys, con_secret)
             return api
     else:
-        api = get_pin(acc_key, acc_sec, CONSUMER_KEY, CONSUMER_SECRET)
+        api = get_pin(acc_key, acc_sec, con_keys, con_secret)
         return api
     
-# Retweet
-def retweeter(keyword, acc_key, acc_sec, CONSUMER_KEY, CONSUMER_SECRET, username):
-    api = new_auth(acc_key, acc_sec, CONSUMER_KEY, CONSUMER_SECRET)
-    retweets = api.retweeted_by_me()
-    if retweets:
-        created_after = retweets[0].retweeted_status.created_at
-    else:
-        # if we've never retweeted before, then we're going to
-        # retweet all msgs created after the 20th century, ie. all of them
-        created_after = datetime.datetime(year=2000, month=1, day=1)
-    # grab all tweets that include our keyword 
-    tweets = api.search(keyword)
-    # reverse them to get the oldest first
-    tweets.reverse()
-    for tweet in tweets:
-        # if the tweet is new, and was not made from our account, retweet it
-        if tweet.created_at > created_after and tweet.from_user != username:
-           api.retweet(tweet.id)
 
 def random_intro(i_file):
     # Load the intros from file and put them into a list.
