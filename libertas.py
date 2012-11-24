@@ -106,8 +106,6 @@ elif args.sub_name == "ed":
         else:
             print "Seconds out of range"
     print "Libertas tweetbot unloaded."
-    exit_selection= random_intro(ed_exit_file)
-    api.update_status(exit_selection)
     exit()
 
 # The list_check command code
