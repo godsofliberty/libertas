@@ -63,11 +63,11 @@ def get_pin(acc_key, acc_sec, con_keys, con_secret):
 def authorize(acc_key, acc_sec, con_keys, con_secret):
     key_file = open(acc_key)
     for key in key_file:
-        ACCESS_KEY = key
+        ACCESS_KEY = key.strip()
     key_file.close()
     sec_file = open(acc_sec)
     for sec in sec_file:
-        ACCESS_SECRET = sec
+        ACCESS_SECRET = sec.strip()
     sec_file.close()
     con_key = open(con_keys)
     for c_key in con_key:
@@ -80,7 +80,7 @@ def authorize(acc_key, acc_sec, con_keys, con_secret):
     auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
     auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
     return tweepy.API(auth)
-    print [CONSUMER_SECRET, CONSUMER_KEY]
+
 # Display the program name
 def logo(p_name):
     os.system("clear")
