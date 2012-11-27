@@ -44,7 +44,7 @@ tweet_parser.add_argument("string", action="store", help="The tweet to send to t
 
 # The ed command.
 ed_parser = subparsers.add_parser("ed", help="A libertarian quote tweeter bot.")
-ed_parser.add_argument("file", action="store", help="File of quotes to send. Default=data/ed/quotes.txt")
+ed_parser.add_argument("ed_files", action="store", help="File of quotes to send.")
 ed_parser.add_argument("-s", "--seconds", action="store", dest="secs", help="Wait between tweets: 30-3600. Default=300", type=int)
 ed_parser.add_argument("-i", "--intro", help="The ed intro file. Default=data/intros/ed_intros.txt")
 ed_parser. add_argument("-e", "--exits", help="The ed exit file. Default=data/exits/exits.txt")
@@ -72,10 +72,12 @@ if args.sub_name == "tweet":
 
 # The ed Command code
 elif args.sub_name == "ed":
-    print "Libertas tweetbot initialized..."
+    print "Libertas ed initialized..."
     api = new_auth(acc_key, acc_sec, con_keys, con_secret)
-    if args.file:
-        quote_list = str(args.file)
+    
+    if args.ed_files:
+        quote_list = str(args.ed_files)
+        
     else:
         print "No such file"
     if args.secs == None:
@@ -84,30 +86,28 @@ elif args.sub_name == "ed":
         wait = args.secs
         results = test_secs(wait)
         if results == True:
-            if args.intro:
-                ed_intro_file=args.intro
-            else: 
-                ed_intro_file = "data/intros/ed_intros.txt"
-            ed_intro = random_intro(ed_intro_file)
-            if args.exits:
-                ed_exit_file = args.exits
-            else:
-                ed_exit = random_intro(ed_exit_file)
-            qflist = open(quote_list)
-            print ed_intro
-            api.update_status(ed_intro)
-            for quote in qflist:
-                print quote
-                api.update_status(quote)
-                time.sleep(wait)
-            qflist.close()
-            print ed_exit
-            api.update_status(ed_exit)
+            pass
         else:
-            print "Seconds out of range"
-    print "Libertas tweetbot unloaded."
+            print wait, "is out of range."    
+    ed_intro_file=args.intro
+    if ed_intro_file == None:
+        ed_intro_file = "data/intros/ed_intros.txt"
+    ed_intro = random_intro(ed_intro_file)
+    if args.exits:
+        ed_exit_file = args.exits
+    else:
+        ed_exit = random_intro(ed_exit_file)
+    qflist = open(quote_list)
+    print ed_intro
+    api.update_status(ed_intro)
+    for quote in qflist:
+        print quote
+        api.update_status(quote)
+        time.sleep(wait)
+    qflist.close()
+    print ed_exit
+    api.update_status(ed_exit)
     exit()
-
 # The list_check command code
 elif args.sub_name == "list_check":
     if args.file:
@@ -168,23 +168,23 @@ elif args.sub_name == "ffbot":
         args.secs = 300
     elif args.file == None:
         args.file = "data/intros/ff_intros.txt"
- #Get the list to follow from twitter choose one.
-twitter_lists = get_lists(api)
-print twitter_lists
-choice = list_choice(twitter_lists, args.tlist)
- # Set the seconds between tweets.
-wait = args.secs
-results = test_secs(wait)
-if results == True:
-    pass
-else:
-    print "seconds must be between 30 and 3600"
+# Get the list to follow from twitter choose one.
+    twitter_lists = get_lists(api)
+    print twitter_lists
+    choice = list_choice(twitter_lists, args.tlist)
+# Set the seconds between tweets.
+    wait = args.secs
+    results = test_secs(wait)
+    if results == True:
+        pass
+    else:
+        print "seconds must be between 30 and 3600"
 # Get the intro from the file
-intro = random_intro(args.file)
-exit_tweet = random_intro(ff_exit_file)
-print intro
+    intro = random_intro(args.file)
+    exit_tweet = random_intro(ff_exit_file)
+    print intro
 # Set it in motion
-execute(api, choice, p_name, intro, exit_tweet, wait, username)
+    execute(api, choice, p_name, intro, exit_tweet, wait, username)
 
 
 
