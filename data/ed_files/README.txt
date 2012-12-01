@@ -6,9 +6,9 @@ My goal is to create numerous files, each dealing with various subjects.
 
 The naming convention should be ed_subject.txt
 
-The quotes.txt file is just an example.
+The ed_quotes.txt file is just an example.
 
-I hope many of you contribute ed files to this directory , which will periodically distributed with libertas.
+I hope many of you contribute ed files to this directory , which will be periodically distributed with libertas.
 
 Feel free to edit, delete and add to your heart's content.
 

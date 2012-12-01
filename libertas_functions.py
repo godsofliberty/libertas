@@ -3,7 +3,7 @@ import os
 import time
 import webbrowser
 import random
-
+# Libertas2 Functions Module
 # Check to see if is an integer
 def is_integer(x):
     try:
@@ -42,8 +42,15 @@ def check_num(uinput):
 
 # Get twitter PIN for Authorization
 def get_pin(acc_key, acc_sec, con_keys, con_secret):
-    # Get the pin
-    auth = tweepy.OAuthHandler(con_keys, con_secret)
+    con_key = open(con_keys)
+    for c_key in con_key:
+        CONSUMER_KEY = c_key.strip()
+    con_key.close()
+    con_sec = open(con_secret)
+    for c_sec in con_sec:
+        CONSUMER_SECRET = c_sec.strip()
+    con_sec.close()
+    auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
     auth_url = auth.get_authorization_url()
     webbrowser.open(auth_url)
     pin = raw_input("Enter the PIN: ")
@@ -97,10 +104,10 @@ def new_auth(acc_key, acc_sec, con_keys, con_secret):
             api = authorize(acc_key, acc_sec, con_keys, con_secret)
             return api
         else:
-            api = get_pin(acc_key, acc_sec, con_keys, con_secret)
+            api = get_pin(acc_key, acc_sec, con_keys, con_secret )
             return api
     else:
-        api = get_pin(acc_key, acc_sec, con_keys, con_secret)
+        api = get_pin(acc_key, acc_sec, con_keys, con_secret )
         return api
     
 
@@ -152,7 +159,7 @@ def test_secs(wait):
             return False
 
 # Slices up the list to tweet, formats the tweets, and sends them.
-def execute(api, fflist, p_name, libertas_intro, exit_tweet, secs, username):
+def follow_friday(api, fflist, p_name, libertas_intro, exit_tweet, secs, username):
 # Get list members from the selected twitter list and add the @
     tweet_list =[]
     the_list = tweepy.Cursor(api.list_members, username, fflist).items()
@@ -164,7 +171,10 @@ def execute(api, fflist, p_name, libertas_intro, exit_tweet, secs, username):
     tweet_stop =6
     tweet = "ok"
 # Libertas Intro calls random_intro and sends the intro to twitter
-    api.update_status(libertas_intro)
+    try:
+        api.update_status(libertas_intro)
+    except tweepy.error.TweepError:
+        print "Duplicate tweet"
     time.sleep(10)
 # Format the tweet making sure the bot stops when it runs out of members.
     ff = "#FF"
@@ -178,11 +188,16 @@ def execute(api, fflist, p_name, libertas_intro, exit_tweet, secs, username):
                 final_tweet = ff, almost_last_tweet
                 msg = " ".join(final_tweet)
                 print msg
-                api.update_status(msg)
+                try:
+                    api.update_status(msg)
+                except tweepy.error.TweepError:
+                    print "duplicate tweet"
                 time.sleep(secs)
     logo(p_name)
-    api.update_status(exit_tweet)
-
+    try:
+        api.update_status(exit_tweet)
+    except tweepy.error.TweepError:
+        print "Duplicate tweet"
 # list_check Function
 def list_check(arg, p_name):
     logo(p_name)
@@ -196,8 +211,31 @@ def list_check(arg, p_name):
         else:
             print "ok"
     
-        
-
+# The ed bot
+def ed(api, secs, intro, ed_file, extro):
+    qflist = open(ed_file)
+    print intro
+    try:
+        api.update_status(intro)
+    except tweepy.error.TweepError:
+        print "Duplicate tweet"
+    ed_tweets = []
+    for quote in qflist:
+        ed_tweets.append(quote)
+    qflist.close()
+    for tweet in ed_tweets:
+        print tweet
+        try:
+            api.update_status(tweet)
+        except tweepy.error.TweepError:
+            print "Tweet is a duplicate"
+        time.sleep(secs)
+    
+    print extro
+    try:
+        api.update_status(extro)        
+    except tweepy.error.TweepError:
+        print "Duplicate tweet"
 
         
          

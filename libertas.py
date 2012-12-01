@@ -9,10 +9,10 @@ from argparse import RawTextHelpFormatter
 # variables   
 p_name = "Libertas 2.0 http://godsofliberty.github.com/libertas/"
 # API Keys
-acc_key = "data/acc_key.txt"
-acc_sec = "data/acc_sec.txt"
-con_keys = "data/con_key.txt"
-con_secret = "data/con_sec.txt"
+acc_key = "data/keys/acc_key.txt"
+acc_sec = "data/keys/acc_sec.txt"
+con_keys = "data/keys/con_key.txt"
+con_secret = "data/keys/con_sec.txt"
 ff_exit_file="data/exits/ff_exits.txt"
 ed_exit_file="data/exits/ed_exits.txt"
      
@@ -66,8 +66,10 @@ args = parser.parse_args()
 # The tweet command code
 if args.sub_name == "tweet":
     api = new_auth(acc_key, acc_sec, con_keys, con_secret)
-    api.update_status(str(args.string))
-    time.sleep(5)
+    try:
+        api.update_status(str(args.string))
+    except tweepy.error.TweepError:
+        print "Duplicate tweet. Wait a while before you tweet that again."
     exit()
 
 # The ed Command code
@@ -97,16 +99,7 @@ elif args.sub_name == "ed":
         ed_exit_file = args.exits
     else:
         ed_exit = random_intro(ed_exit_file)
-    qflist = open(quote_list)
-    print ed_intro
-    api.update_status(ed_intro)
-    for quote in qflist:
-        print quote
-        api.update_status(quote)
-        time.sleep(wait)
-    qflist.close()
-    print ed_exit
-    api.update_status(ed_exit)
+    ed(api, wait, ed_intro, quote_list, ed_exit)
     exit()
 # The list_check command code
 elif args.sub_name == "list_check":
@@ -147,7 +140,7 @@ elif args.sub_name == "ffbot":
                 intro_file = random_intro(user_file)
                 exit_tweet = random_intro(ff_exit_file)
                 print p_name + " is working..."
-                execute(api, choice, p_name, intro_file, exit_tweet, wait, username)
+                follow_friday(api, choice, p_name, intro_file, exit_tweet, wait, username)
                 print p_name + "is finished."
         else:
             exit()
@@ -184,7 +177,7 @@ elif args.sub_name == "ffbot":
     exit_tweet = random_intro(ff_exit_file)
     print intro
 # Set it in motion
-    execute(api, choice, p_name, intro, exit_tweet, wait, username)
+    follow_friday(api, choice, p_name, intro, exit_tweet, wait, username)
 
 
 
