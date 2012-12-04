@@ -13,8 +13,10 @@ acc_key = "data/keys/acc_key.txt"
 acc_sec = "data/keys/acc_sec.txt"
 con_keys = "data/keys/con_key.txt"
 con_secret = "data/keys/con_sec.txt"
-ff_exit_file="data/exits/ff_exits.txt"
-ed_exit_file="data/exits/ed_exits.txt"
+default_ff_intro = "data/access/ff_intros/ff_lib_intros.txt"
+default_ed_intro = "data/acsess/ed_intros/ed_intros.txt"
+ff_exit_file="data/access/ff_exits/ff_exits.txt"
+ed_exit_file="data/access/ed_exits/ed_exits.txt"
      
 parser = argparse.ArgumentParser(prog="libertas", formatter_class=RawTextHelpFormatter, description="""Libertas is a set of cli tools for twitter with activism in mind. It includes a cli tweet, #FF bot and more.
 
@@ -46,8 +48,8 @@ tweet_parser.add_argument("string", action="store", help="The tweet to send to t
 ed_parser = subparsers.add_parser("ed", help="A libertarian quote tweeter bot.")
 ed_parser.add_argument("ed_files", action="store", help="File of quotes to send.")
 ed_parser.add_argument("-s", "--seconds", action="store", dest="secs", help="Wait between tweets: 30-3600. Default=300", type=int)
-ed_parser.add_argument("-i", "--intro", help="The ed intro file. Default=data/intros/ed_intros.txt")
-ed_parser. add_argument("-e", "--exits", help="The ed exit file. Default=data/exits/exits.txt")
+ed_parser.add_argument("-i", "--intro", help="The ed intro file. Default=data/acsess/ed_intros/ed_intros.txt")
+ed_parser. add_argument("-e", "--exits", help="The ed exit file. Default=data/acsess/ed_exits/ed_exits.txt")
 
 # The List_check command
 list_check_parser =subparsers.add_parser("list_check", help="Checks a list for character counts and reports a line over 140 characters.")
@@ -57,7 +59,7 @@ list_check_parser.add_argument("file", action="store", help="Check a file to ass
 ffbot_parser = subparsers.add_parser("ffbot", help="Sends #ff tweets made from a specified list.")
 ffbot_parser.add_argument("-l", "--list", action="store", dest="tlist", help="Number corresponding to the twitter list. You can get this value by first running ffbot with no options. Default=0 (the top list)", type=int)
 ffbot_parser.add_argument("-s", "--seconds", action="store", dest="secs", help="Seconds to wait between tweets: 30-3600. Default=300", type=int)
-ffbot_parser.add_argument("-f", "--file", help="File with intros, separated by line breaks. This list will be randomized, and one line will be selected. Default=data/intros/ff_intros.txt")
+ffbot_parser.add_argument("-f", "--file", help="File with intros, separated by line breaks. This list will be randomized, and one line will be selected. Default=data/access/ff_intros/ff_lib_intros.txt")
  
 args = parser.parse_args()
 
@@ -93,7 +95,7 @@ elif args.sub_name == "ed":
             print wait, "is out of range."    
     ed_intro_file=args.intro
     if ed_intro_file == None:
-        ed_intro_file = "data/intros/ed_intros.txt"
+        ed_intro_file = default_ed_intro
     ed_intro = random_intro(ed_intro_file)
     if args.exits:
         ed_exit_file = args.exits
@@ -135,7 +137,7 @@ elif args.sub_name == "ffbot":
             print wait
             user_file = str(raw_input("Enter full path to file to be scanned for an intro: "))
             if user_file == None:
-                user_file = "data/intros/ff_intros.txt"
+                user_file = default_ff_intro
             else:
                 intro_file = random_intro(user_file)
                 exit_tweet = random_intro(ff_exit_file)
@@ -151,16 +153,16 @@ elif args.sub_name == "ffbot":
         args.secs = 300
     elif args.tlist == None and args.file == None:
         args.tlist = 0
-        args.file = "data/intros/ff_intros.txt"
+        args.file = default_ff_intro
     elif args.secs == None and args.file == None:
         args.secs = 300
-        args.file = "data/intros/ff_intros.txt"
+        args.file = default_ff_intro
     elif args.tlist == None:
         args.tlist = 0
     elif args.secs == None:
         args.secs = 300
     elif args.file == None:
-        args.file = "data/intros/ff_intros.txt"
+        args.file = default_ff_intro
 # Get the list to follow from twitter choose one.
     twitter_lists = get_lists(api)
     print twitter_lists
