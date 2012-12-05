@@ -14,7 +14,7 @@ acc_sec = "data/keys/acc_sec.txt"
 con_keys = "data/keys/con_key.txt"
 con_secret = "data/keys/con_sec.txt"
 default_ff_intro = "data/access/ff_intros/ff_lib_intros.txt"
-default_ed_intro = "data/acsess/ed_intros/ed_intros.txt"
+default_ed_intro = "data/access/ed_intros/ed_intros.txt"
 ff_exit_file="data/access/ff_exits/ff_exits.txt"
 ed_exit_file="data/access/ed_exits/ed_exits.txt"
      
@@ -48,8 +48,8 @@ tweet_parser.add_argument("string", action="store", help="The tweet to send to t
 ed_parser = subparsers.add_parser("ed", help="A libertarian quote tweeter bot.")
 ed_parser.add_argument("ed_files", action="store", help="File of quotes to send.")
 ed_parser.add_argument("-s", "--seconds", action="store", dest="secs", help="Wait between tweets: 30-3600. Default=300", type=int)
-ed_parser.add_argument("-i", "--intro", help="The ed intro file. Default=data/acsess/ed_intros/ed_intros.txt")
-ed_parser. add_argument("-e", "--exits", help="The ed exit file. Default=data/acsess/ed_exits/ed_exits.txt")
+ed_parser.add_argument("-i", "--intro", help="The ed intro file. Default=data/access/ed_intros/ed_intros.txt")
+ed_parser. add_argument("-e", "--exits", help="The ed exit file. Default=data/access/ed_exits/ed_exits.txt")
 
 # The List_check command
 list_check_parser =subparsers.add_parser("list_check", help="Checks a list for character counts and reports a line over 140 characters.")
