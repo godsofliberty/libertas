@@ -159,7 +159,7 @@ def test_secs(wait):
             return False
 
 # Slices up the list to tweet, formats the tweets, and sends them.
-def follow_friday(api, fflist, p_name, libertas_intro, exit_tweet, secs, username):
+def follow_friday(api, username, fflist, libertas_intro, exit_tweet, secs, p_name):
 # Get list members from the selected twitter list and add the @
     tweet_list =[]
     the_list = tweepy.Cursor(api.list_members, username, fflist).items()

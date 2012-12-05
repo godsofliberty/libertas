@@ -48,8 +48,8 @@ tweet_parser.add_argument("string", action="store", help="The tweet to send to t
 ed_parser = subparsers.add_parser("ed", help="A libertarian quote tweeter bot.")
 ed_parser.add_argument("ed_files", action="store", help="File of quotes to send.")
 ed_parser.add_argument("-s", "--seconds", action="store", dest="secs", help="Wait between tweets: 30-3600. Default=300", type=int)
-ed_parser.add_argument("-i", "--intro", help="The ed intro file. Default=data/access/ed_intros/ed_intros.txt")
-ed_parser. add_argument("-e", "--exits", help="The ed exit file. Default=data/access/ed_exits/ed_exits.txt")
+ed_parser.add_argument("-i", "--intro", help="The ed intro file. Default=data/acsess/ed_intros/ed_intros.txt")
+ed_parser. add_argument("-e", "--exits", help="The ed exit file. Default=data/acsess/ed_exits/ed_exits.txt")
 
 # The List_check command
 list_check_parser =subparsers.add_parser("list_check", help="Checks a list for character counts and reports a line over 140 characters.")
@@ -136,14 +136,15 @@ elif args.sub_name == "ffbot":
         if results == True:
             print wait
             user_file = str(raw_input("Enter full path to file to be scanned for an intro: "))
-            if user_file == None:
+            if user_file == "":
                 user_file = default_ff_intro
-            else:
-                intro_file = random_intro(user_file)
-                exit_tweet = random_intro(ff_exit_file)
-                print p_name + " is working..."
-                follow_friday(api, choice, p_name, intro_file, exit_tweet, wait, username)
-                print p_name + "is finished."
+            intro_file = random_intro(user_file)
+            exit_tweet = random_intro(ff_exit_file)
+            print p_name + " is working..."
+            print intro_file
+            follow_friday(api, username, choice, intro_file, exit_tweet, wait, p_name)
+            print exit_tweet
+            print p_name + "is finished."
         else:
             exit()
             
