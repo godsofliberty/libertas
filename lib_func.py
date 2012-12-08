@@ -3,7 +3,7 @@ import os
 import time
 import webbrowser
 import random
-# Libertas2 Functions Module
+# Libertas Functions Module
 # Check to see if is an integer
 def is_integer(x):
     try:
@@ -93,6 +93,7 @@ def logo(p_name):
     os.system("clear")
     print""
     print p_name
+    print "http://godsofliberty.github.com/libertas/"
     print""
 
 #Check if authorization is new or already in a file
@@ -191,7 +192,7 @@ def follow_friday(api, username, fflist, libertas_intro, exit_tweet, secs, p_nam
                 try:
                     api.update_status(msg)
                 except tweepy.error.TweepError:
-                    print "duplicate tweet"
+                    print "Duplicate tweet"
                 time.sleep(secs)
     logo(p_name)
     try:
@@ -228,7 +229,7 @@ def ed(api, secs, intro, ed_file, extro):
         try:
             api.update_status(tweet)
         except tweepy.error.TweepError:
-            print "Tweet is a duplicate"
+            print "Duplicate tweet"
         time.sleep(secs)
     
     print extro
