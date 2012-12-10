@@ -33,34 +33,33 @@
       <section id="main_content" class="inner">
         <h2>Welcome to The Libertas Project!</h2>
 
-<hr><h3>Libertas is a program suite of commands for twitter.</h3>
+<hr><h3>Libertas is a program suite of tools for twitter.</h3>
 
 <ol>
-<li>tweet is a command that simply tweets the string you supply on the command line.</li>
-<li>ffbot  can be run in two different modes: interactive and on the command line. What options that are not set by the user will assume defaults.</li>
-<li>ed is short for education. It is a bot similar to ffbot that will tweet a list of lines from a text file, such as quotes or facts.</li>
-<li>list_check will scan a file one line at a time for lines over 140 characters long, and report that line, which can then be edited.</li>
+<li><strong>tweet</strong> is a command that simply tweets the string you supply on the command line.</li>
+<li><strong>ffbot</strong> is an interactive #FF FollowFriday bot.</li>
+<li><strong>ed</strong> is short for education. It is a bot similar to ffbot that will tweet a list of lines from a text file, such as quotes or facts.</li>
+<li><strong>list_check</strong> will scan a file one line at a time for lines over 140 characters long, and report that line, which can then be edited.</li>
 </ol><hr><h3>Usage:</h3>
 
 <ul>
 <li><p><code>python libertas.py tweet "STRING"</code> simply sends the string as tweet to twitter.</p></li>
-<li><p><code>python libertas.py ffbot</code> with no options enters interactive mode, which will ask you to select the number of the list you want to tweet, then the wait in seconds between 30-3600 [default=300]. Next it will ask for the path to the intros file you want to use. Once you press enter, ffbot will pick a random intro, break up the twitter list to smaller lists of six users and format them, and then tweet each one after the number of seconds specified.</p></li>
-<li><p><code>python libertas.py ffbot -l 0 -s 300 -f "data/intros.txt"</code> is used here with all the defaults. If you omit one or two options, the defaults will be supplied by the program, and of course, with no options, it enters interactive mode.</p></li>
-<li><p><code>python libertas.py ed -s 300 "data/quotes.txt"</code> The -s is optional, and defaults to 300. The path to the file to tweet is required. My goal to create ed files according to subject, and which can be submitted and contributed to.</p></li>
+<li><p><code>python libertas.py ffbot</code> enters interactive mode, which will ask you to select the number corresponding to the list you want to tweet, then the wait in seconds between 30-3600 [default=300]. Next it will ask for the intros file you want to use. Once you press enter, ffbot will pick a random intro, break up the twitter list to smaller lists of six users and format them, and then tweet each one after the number of seconds specified.</p></li>
+<li><p><code>python libertas.py ed</code> works like <strong>ffbot</strong> but asks for the ed file to be tweeted instead. Both are now menu-driven. The options became complicated for the user.</p></li>
 <li><p><code>python libertas.py list_check "FILE"</code> checks "FILE" line by line and counts characters, reporting a line with more than 140 characters. Good for checking intro and ed lists.</p></li>
 </ul><hr><p>libertas.py was written in python 2.7 and requires the tweepy library <a href="http://pypi.python.org/pypi/tweepy/1.12">tweepy-1.11</a> or later.</p>
 <p> Here is <a href="https://github.com/downloads/godsofliberty/libertas/tweepy1.12.zip">tweepy 1.12</a> in zip format.</p>
 <p></p>
 <h3>More to Come...</h3>
 
-<p>I have provided a zipped file of libertas data called access.zip that I hope can be user-contributed on Dropbox. </p>
-<p>Here is the link on Dropbox: <a href="https://www.dropbox.com/s/ifqf2ka3r33pt1i/access.zip">access.zip</a>
+<p>I have provided a zipped file of libertas data called data.zip that I hope can be contributed to on Dropbox. </p>
+<p>Here is the link on Dropbox: <a href="https://www.dropbox.com/s/ic8q4z8kjzsl2lr/data.zip">data.zip</a>
 
-<p>This zip contains the directory, access, and should not be renamed. The access directory contains a README and the directories, ed_files, ed_intros, ed_exits, ff_intros, and ff_exits.</p>
+<p>This zip contains the data directory with a README and the directories, ed, intros, exits, and keys.</p>
 
-<p>Or you can contribute by downloading <a href="https://github.com/downloads/godsofliberty/libertas/access.zip">access.zip</a>, making changes and emailing them to me for upload, or use dropbox. Or better yet, contribute to the project on github at <a href="https://github.com/godsofliberty/libertas">Github</a>.
+<p>Or you can contribute by downloading <a href="https://github.com/downloads/godsofliberty/libertas/data.zip">data.zip</a>, making changes and emailing them to me for upload. Or better yet, contribute to the project on github at <a href="https://github.com/godsofliberty/libertas">Github</a>.
 </p>
-<p>Whether you contribute or not, you can still download access.zip as an expansion to libertas 2.0.</p>
+<p>Whether you contribute or not, you can still download data.zip as an expansion to libertas 2.0.</p>
 
 <p>Email me <a href="mailto:godsofliberty@lavabit.com">godsofliberty@lavabit.com</a></p>
       </section>
