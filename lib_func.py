@@ -3,87 +3,82 @@ import os
 import time
 import webbrowser
 import random
-# Libertas Functions Module
-# Check to see if is an integer
-def is_integer(x):
-    try:
-        int(x)
-        return True
-    except ValueError:
-        return False
 
-# Reutrns False if not a number
-def is_number(x):
-    try:
-        x + 1
-        return True
-    except TypeError:
-        return False
+# Libertas Functions Module
+
         
 # Turns a list into a menu
 def list_menu(lists):
-    count = len(lists)
-    num = 0
+    """Takes one parameter, a list, and prints it as a menu with index as selection."""
     for item in lists:
-        tac = str(num)
-        num = num + 1
-        print '('+tac+')', item
+        selector = "(" + str(lists.index(item)) + ")"
+        print selector, item
 
-# Make sure the input entered is number
-def check_num(uinput):
-    if is_integer(uinput):
-        num = int(uinput)
-        if is_number(num):
+# Make sure the input entered is an integer number
+def check_num(user_input):
+    """Takes one parameter and returns True if it is a number of the integer type, False otherwise."""
+    try:
+        user_input + 1
+        if isinstance(user_input, int):
             return True
         else:
             return False
-    else:
+    except TypeError:
         return False
 
 # Get twitter PIN for Authorization
 def get_pin(acc_key, acc_sec, con_keys, con_secret):
-    con_key = open(con_keys)
-    for c_key in con_key:
-        CONSUMER_KEY = c_key.strip()
-    con_key.close()
-    con_sec = open(con_secret)
-    for c_sec in con_sec:
-        CONSUMER_SECRET = c_sec.strip()
-    con_sec.close()
+    """This function takes 4 file parameters. con_keys and con_secret contain the keys that are passed to Twitter.
+    Twitter evaluates these keys and issues a PIN number to be entered by the user.
+    The acc_key and acc_sec files are then written.
+    All four of these keys are needed to authorize the program."""  
+    with open(con_keys) as con_key:
+        for c_key in con_key:
+            CONSUMER_KEY = c_key.strip()
+            
+    with open(con_secret) as con_sec:
+        for c_sec in con_sec:
+            CONSUMER_SECRET = c_sec.strip()
+            
     auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
     auth_url = auth.get_authorization_url()
     webbrowser.open(auth_url)
+    
     pin = raw_input("Enter the PIN: ")
     auth.get_access_token(pin)
     ACCESS_KEY = auth.access_token.key
     ACCESS_SECRET = auth.access_token.secret
-    key_file = open(acc_key, 'w')
-    key_file.write(ACCESS_KEY)
-    key_file.close()
-    sec_file = open(acc_sec, 'w')
-    sec_file.write(ACCESS_SECRET)
-    sec_file.close()
+    
+    with open(acc_key, 'w') as key_file:
+        key_file.write(ACCESS_KEY)
+        
+    with open(acc_sec, 'w') as sec_file:
+        sec_file.write(ACCESS_SECRET)
+
     auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
     return tweepy.API(auth)
 
 # Authorize from a file
 def authorize(acc_key, acc_sec, con_keys, con_secret):
-    key_file = open(acc_key)
-    for key in key_file:
-        ACCESS_KEY = key.strip()
-    key_file.close()
-    sec_file = open(acc_sec)
-    for sec in sec_file:
-        ACCESS_SECRET = sec.strip()
-    sec_file.close()
-    con_key = open(con_keys)
-    for c_key in con_key:
-        CONSUMER_KEY = c_key.strip()
-    con_key.close()
-    con_sec = open(con_secret)
-    for c_sec in con_sec:
-        CONSUMER_SECRET = c_sec.strip()
-    con_sec.close()
+    """This function takes four file parameters containing the authorization keys.
+    All four are opened, stripped of newline characters,
+    and passed to Twitter for authorization."""
+    with open(acc_key) as key_file:
+        for key in key_file:
+            ACCESS_KEY = key.strip()
+            
+    with open(acc_sec) as sec_file:
+        for sec in sec_file:
+            ACCESS_SECRET = sec.strip()
+    
+    with open(con_keys) as con_key:
+        for c_key in con_key:
+            CONSUMER_KEY = c_key.strip()
+   
+    with open(con_secret) as con_sec:
+        for c_sec in con_sec:
+            CONSUMER_SECRET = c_sec.strip()
+    
     auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
     auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
     return tweepy.API(auth)
@@ -96,9 +91,12 @@ def logo(p_name):
     print "http://godsofliberty.github.com/libertas/"
     print""
 
-#Check if authorization is new or already in a file
-#ASSIGN TO api CALL THIS FUNCTION TO AUTHORIZE
+# Check if authorization is new
 def new_auth(acc_key, acc_sec, con_keys, con_secret):
+    """This function takes 4 file parameters containing the authorization keys.
+    If the acc_key and acc_sec files exist pass them to the authorize function,
+    else the get_pin function is called."""
+    
     # Check to see if AccessKeys exist already, if not get PIN from twitter
     if os.path.exists(acc_key):
         if os.path.exists(acc_sec):
@@ -111,18 +109,15 @@ def new_auth(acc_key, acc_sec, con_keys, con_secret):
         api = get_pin(acc_key, acc_sec, con_keys, con_secret )
         return api
     
-
 def random_intro(i_file):
     # Load the intros from file and put them into a list.
-    intro_list =[]
-    intro_file = open(i_file)
-    for selection in intro_file:
-        intro_list.append(selection)
-    intro_file.close()
-    # Randomize the intro_list.
+    with open(i_file) as intro_file:
+        intro_list = [selection.strip() for selection in intro_file]
+
+    # determines the index range of the list and selects an index at random.
     list_length = (len(intro_list)) - 1
     random_intro = random.randint(0, list_length)
-    selection = intro_list[random_intro]
+    selection = intro_list[random_intro] # Maps the index to the list item.
     return selection
 
 
@@ -131,9 +126,8 @@ def list_choice(local_list, choice):
     # Get the user's choice, checks to make sure it is acceptable and set it as the list to #FF
     last = len(local_list)
     if check_num(choice):
-        pick = int(choice)
-        if pick in range(0, last):
-            fflist = local_list[pick]
+        if choice in range(0, last):
+            fflist = local_list[choice]
             return fflist
         else:
             print "The number is out of range. Please choose a number between 0 and", last
@@ -149,12 +143,10 @@ def get_lists(api):
         local_list.append(new_list)
     return local_list
     
-        
 # Get the seconds and test the range.
 def test_secs(wait):
-    if check_num(wait) == True:
-        if int(wait) in range(30, 3601):
-            secs = int(wait)
+    if check_num(wait):
+        if wait in range(30, 3601):
             return True
         else:
             return False
@@ -185,8 +177,8 @@ def follow_friday(api, username, fflist, libertas_intro, exit_tweet, secs, p_nam
             tweet_start = tweet_start + 6
             tweet_stop = tweet_stop + 6
             if len(tweet) !=0:
-                almost_last_tweet = " ".join(tweet)
-                final_tweet = ff, almost_last_tweet
+                name_string = " ".join(tweet)
+                final_tweet = ff, name_string
                 msg = " ".join(final_tweet)
                 print msg
                 try:
@@ -214,16 +206,15 @@ def list_check(arg, p_name):
     
 # The ed bot
 def ed(api, secs, intro, ed_file, extro):
-    qflist = open(ed_file)
     print intro
     try:
         api.update_status(intro)
     except tweepy.error.TweepError:
         print "Duplicate tweet"
     ed_tweets = []
-    for quote in qflist:
-        ed_tweets.append(quote)
-    qflist.close()
+    with open(ed_file) as qflist:
+        for quote in qflist:
+            ed_tweets.append(quote)
     for tweet in ed_tweets:
         print tweet
         try:
@@ -237,7 +228,18 @@ def ed(api, secs, intro, ed_file, extro):
         api.update_status(extro)        
     except tweepy.error.TweepError:
         print "Duplicate tweet"
-
         
+# Retweeter
+def retweeter(api, result_list):
+    count = 0
+    while count != 24:
+    
+        search_result_object = result_list[count]
+        try:
+            api.retweet(search_result_object.id)
+            count = count + 1
+            time.sleep(60)
+        except tweepy.error.TweepError:
+            count = count + 1        
          
     

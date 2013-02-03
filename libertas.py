@@ -6,8 +6,8 @@ import lib_func
 import argparse
 from argparse import RawTextHelpFormatter
 
-# variables 
-version = "2.0"  
+# Program name and version 
+version = "2.5"  
 p_name = "Libertas"
 
 # API Keys
@@ -29,7 +29,7 @@ ed_exit = path_exits + "ed_exits.txt"
 path_ed ="data/ed/"
 
 # Command line options parser     
-parser = argparse.ArgumentParser(prog=p_name, formatter_class=RawTextHelpFormatter, description="""Libertas is a set of cli tools for twitter with activism in mind. It includes a cli tweet, #FF bot and more.
+parser = argparse.ArgumentParser(prog=p_name, formatter_class=RawTextHelpFormatter, description="""Libertas is a set of command line interface (cli) tools for twitter with activism in mind. It includes a cli tweet, #FF bot and more.
 
     Copyright (C) 2010-2012  godsofliberty
     This program is free software: you can redistribute it and/or modify
@@ -102,7 +102,7 @@ under certain conditions."""
     lib_func.list_menu(intro_list)
     print ""
     
-    choice = raw_input("Pick an intro ed intro file: ")
+    choice = raw_input("Pick an ed intro file: ")
     intro_file = path_intros + lib_func.list_choice(intro_list, choice)
     intro = lib_func.random_intro(intro_file)
     print choice
