@@ -102,7 +102,7 @@ under certain conditions."""
     lib_func.list_menu(intro_list)
     print ""
     
-    choice = raw_input("Pick an ed intro file: ")
+    choice = int(raw_input("Pick an ed intro file: "))
     intro_file = path_intros + lib_func.list_choice(intro_list, choice)
     intro = lib_func.random_intro(intro_file)
     print choice
@@ -121,7 +121,7 @@ under certain conditions."""
         lib_func.list_menu(ed_list)
         print ""
         
-        ed_choice = raw_input("Pick an ed file: ")
+        ed_choice = int(raw_input("Pick an ed file: "))
         ed_file = path_ed + lib_func.list_choice(ed_list, ed_choice)
         print ed_choice
         print ""
@@ -180,7 +180,7 @@ under certain conditions."""
         lib_func.list_menu(ff_intro_list)
         print ""
         
-        choice = raw_input("Pick an #FF intro file: ")
+        choice = int(raw_input("Pick an #FF intro file: "))
         intro_file = path_intros + lib_func.list_choice(ff_intro_list, choice)
         intro = lib_func.random_intro(intro_file)
         print choice
