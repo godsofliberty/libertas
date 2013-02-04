@@ -33,33 +33,58 @@
       <section id="main_content" class="inner">
         <h2>Welcome to The Libertas Project!</h2>
 
-<hr><h3>Libertas is a program suite of tools for twitter.</h3>
+<hr><h3>Libertas is a suite of command line tools for twitter.</h3>
+
+<p>The current version of Libertas is 2.5.</p>
+<p>Check <a href="https://www.dropbox.com/sh/ysck363z467nh4x/6OaAq0v5s8">Dropbox</a> for the latest version of the Libertas Data files.</p>
+
+<h4>Libertas lets you:</h4>
+<ul>
+<li><strong>Tweet</strong> from the command line. I do this <strong>alot!</strong></li>
+<li><strong>Follow Friday</strong> to promote your followers easily.</li>
+<li><strong>Automate</strong> tweeting. Whatever you can put in a text file Libertas can tweet at regular intervals with ed. Facts, quotes, recipes, jokes--you name it--all can be automated 24/7.</li>
+<li><strong>Format</strong> your ed files to make sure your tweets are within Twitter's 140 character range.</li>
+</ul>
 
 <ol>
 <li><strong>tweet</strong> is a command that simply tweets the string you supply on the command line.</li>
 <li><strong>ffbot</strong> is an interactive #FF FollowFriday bot.</li>
 <li><strong>ed</strong> is short for education. It is a bot similar to ffbot that will tweet a list of lines from a text file, such as quotes or facts.</li>
 <li><strong>list_check</strong> will scan a file one line at a time for lines over 140 characters long, and report that line, which can then be edited.</li>
-</ol><hr><h3>Usage:</h3>
+</ol>
+
+<hr>
+
+<h4>Usage:</h4>
 
 <ul>
-<li><p><code>python libertas.py tweet "STRING"</code> simply sends the string as tweet to twitter.</p></li>
-<li><p><code>python libertas.py ffbot</code> enters interactive mode, which will ask you to select the number corresponding to the list you want to tweet, then the wait in seconds between 30-3600 [default=300]. Next it will ask for the intros file you want to use. Once you press enter, ffbot will pick a random intro, break up the twitter list to smaller lists of six users and format them, and then tweet each one after the number of seconds specified.</p></li>
-<li><p><code>python libertas.py ed</code> works like <strong>ffbot</strong> but asks for the ed file to be tweeted instead. Both are now menu-driven. The options became complicated for the user.</p></li>
-<li><p><code>python libertas.py list_check "FILE"</code> checks "FILE" line by line and counts characters, reporting a line with more than 140 characters. Good for checking intro and ed lists.</p></li>
-</ul><hr><p>libertas.py was written in python 2.7 and requires the tweepy library <a href="http://pypi.python.org/pypi/tweepy/1.12">tweepy-1.11</a> or later.</p>
-<p> Here is <a href="https://github.com/downloads/godsofliberty/libertas/tweepy1.12.zip">tweepy 1.12</a> in zip format.</p>
+<li><code>python libertas.py tweet "STRING"</code> simply sends the string as tweet to twitter.</li>
+
+<li><code>python libertas.py ffbot</code> requires you to have at least one Twitter list. The lists you have are displayed as a menu. Choose one. Tell Libertas at what interval to tweet (30 - 3600 seconds). Choose an intro. Hit Enter.</li>
+
+<li><code>python libertas.py ed</code> works like <strong>ffbot</strong> but asks for the ed file to be tweeted instead. Both are now menu-driven. I may re-add the cli options for scripting later.</li>
+
+<li><code>python libertas.py list_check "FILE"</code> checks "FILE" line by line and counts characters, reporting the character count. Good for checking intro and ed lists.</li>
+</ul>
+
+<hr>
+
+<p>libertas.py was written in python 2.7 and requires the tweepy library <a href="http://pypi.python.org/pypi/tweepy/1.12">tweepy-1.11</a> or later.</p>
+
 <p></p>
-<h3>More to Come...</h3>
+<h4>More to Come...</h4>
+<ul>
+<li><strong>Retweeter</strong> will let you retweet tweets based on search terms at a given interval.</li>
+<li><strong>Updater</strong> for the data files Libertas uses, and for Libertas itself.</li>
+</ul>
 
-<p>I have provided a zipped file of libertas data called data.zip that I hope can be contributed to on Dropbox. </p>
-<p>Here is the link on Dropbox: <a href="https://www.dropbox.com/s/ic8q4z8kjzsl2lr/data.zip">data.zip</a>
-
-<p>This zip contains the data directory with a README and the directories, ed, intros, exits, and keys.</p>
-
-<p>Or you can contribute by downloading <a href="https://github.com/downloads/godsofliberty/libertas/data.zip">data.zip</a>, making changes and emailing them to me for upload. Or better yet, contribute to the project on github at <a href="https://github.com/godsofliberty/libertas">Github</a>.
-</p>
-<p>Whether you contribute or not, you can still download data.zip as an expansion to libertas 2.0.</p>
+<h4>Contribute!</h4>
+<p>Anyone can contribute to Libertas Data. Just email me your data and I will update the Data distribution. You can contribute ed files on any subjects you like. You can add intros that are tweeted when the user runs certain tools, or exit tweets.</p>
+<p>If you know python you can contribute code.</p>
+<p>Here is the Dropbox link to the Data distribution. The Data version will change more frequently than the program.</p>
+<p><a href="https://www.dropbox.com/sh/ysck363z467nh4x/6OaAq0v5s8">Data</a></p>
+<p>This zip contains the data directory with a README, changelog.txt and the directories, ed, intros, exits, and keys.</p>
+<p>If you contribute to the Data distrubution, or you haven't edited any of the files for your personal use, then a manual update is easy. Just back up the keys folder, overwrite the data folder and copy the keys back. If you have created an entry in an existing file, you might have to cut and paste. I will start an updater soon.</p>
 
 <p>Email me <a href="mailto:godsofliberty@lavabit.com">godsofliberty@lavabit.com</a></p>
       </section>
