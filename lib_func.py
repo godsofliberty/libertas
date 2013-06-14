@@ -135,14 +135,15 @@ def list_choice(local_list, choice):
         print "Try entering a number between 0 and", last
 
 # Gets the twitter list of lists and ships them off to the list_menu function to be formatted
-def get_lists(api):
+def lists_all(api):
     local_list =[]
-    t_lists = tweepy.Cursor (api.lists).items()
+    t_lists = api.lists_all(api.me().screen_name)
+
     for i_list in t_lists:
         new_list = i_list.name
         local_list.append(new_list)
     return local_list
-    
+
 # Get the seconds and test the range.
 def test_secs(wait):
     if check_num(wait):
@@ -168,7 +169,7 @@ def follow_friday(api, username, fflist, libertas_intro, exit_tweet, secs, p_nam
         api.update_status(libertas_intro)
     except tweepy.error.TweepError:
         print "Duplicate tweet"
-    time.sleep(10)
+    time.sleep(5)
 # Format the tweet making sure the bot stops when it runs out of members.
     ff = "#FF"
     while len(tweet) != 0:

@@ -5,29 +5,23 @@ import time
 import lib_func
 import argparse
 from argparse import RawTextHelpFormatter
-
 # Program name and version 
 version = "2.5"  
 p_name = "Libertas"
-
 # API Keys
 path_keys = "data/keys/"
 AK = path_keys + "AK.txt"
 AS = path_keys + "AS.txt"
 CK = path_keys + "CK.txt"
 CS = path_keys + "CS.txt"
-
 # Intros
 path_intros = "data/intros/"
-
 # Exits
 path_exits = "data/exits/"
 ff_exit = path_exits + "ff_exits.txt"
 ed_exit = path_exits + "ed_exits.txt"
-
 # Ed files
 path_ed ="data/ed/"
-
 # Command line options parser     
 parser = argparse.ArgumentParser(prog=p_name, formatter_class=RawTextHelpFormatter, description="""Libertas is a set of command line interface (cli) tools for twitter with activism in mind. It includes a cli tweet, #FF bot and more.
 
@@ -160,7 +154,7 @@ This is free software, and you are welcome to redistribute it
 under certain conditions."""
     print""
     
-    twitter_lists = lib_func.get_lists(api)
+    twitter_lists = lib_func.lists_all(api)
     lib_func.list_menu(twitter_lists)
     user_choice = int(raw_input("Enter the number corresponding to the list you want to tweet: "))
     ff_list_choice = lib_func.list_choice(twitter_lists, user_choice)
